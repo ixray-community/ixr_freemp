@@ -1,0 +1,65 @@
+
+----------------------------------------------------------------------------------------------------------------------
+class "mp_player_binder" (object_binder)
+----------------------------------------------------------------------------------------------------------------------
+
+function mp_player_binder:__init (obj) super(obj)
+end
+
+----------------------------------------------------------------------------------------------------------------------
+
+function mp_player_binder:net_spawn(data)
+	if object_binder.net_spawn(self,data) == false then
+		return false	
+	end
+	db.add_player(self.object)
+	return true
+end
+
+----------------------------------------------------------------------------------------------------------------------
+
+function mp_player_binder:net_destroy()
+	db.del_player(self.object)
+	object_binder.net_destroy(self)
+end
+----------------------------------------------------------------------------------------------------------------------
+
+function mp_player_binder:reinit()
+	object_binder.reinit(self)
+	
+	self.object:set_callback(callback.on_item_take, self.on_item_take, self)
+	self.object:set_callback(callback.on_item_drop, self.on_item_drop, self)
+	self.object:set_callback(callback.death, self.death_callback, self)
+end
+----------------------------------------------------------------------------------------------------------------------
+
+function mp_player_binder:update(delta)
+	object_binder.update(self, delta)
+	
+end
+
+function mp_player_binder:on_item_take(obj)
+end
+
+function mp_player_binder:on_item_drop(obj)
+end
+
+function mp_player_binder:death_callback(victim, who)
+
+	victim:set_callback(callback.on_item_take, nil)
+	victim:set_callback(callback.on_item_drop, nil)
+	victim:set_callback(callback.death, nil)
+end
+
+----------------------------------------------------------------------------------------------------------------------
+function mp_player_binder:save(packet)
+	object_binder.save(self, packet)
+end
+----------------------------------------------------------------------------------------------------------------------
+function mp_player_binder:load(reader)
+	object_binder.load(self, reader)
+end
+
+
+
+
