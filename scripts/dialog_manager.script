@@ -378,7 +378,7 @@ function init_start_dialogs(dialog, str)
 	script:AddPrecondition("dialog_manager.precondition_sim_action_stay_point_enemy_near")
 	script:AddAction("dialog_manager.action_sim_action_dialog")
 ]]--
-	if not(ph) then
+	if not(ph) and v ~= nil then
 		phrase = dialog:AddPhrase(string.format("dm_%s_general", str), tostring(v.id), tostring(1), -10000)
 	end
 end
