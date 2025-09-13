@@ -1,4 +1,4 @@
-local M_SCRIPT_CUSTOM_EVENT = 52
+local M_SCRIPT_CUSTOM_EVENT = script_events.M_SCRIPT_EVENT
 
 local EVENTS =
 {
