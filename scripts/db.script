@@ -59,6 +59,11 @@ end
 -- В мультиплеере на клиентах, или если сервер не dedicated
 -- возвращаем db.mp_actor.
 function get_actor()
+	-- Skip check if level is not initialized
+	if not level.present() then
+		return nil
+	end
+
 	if OnServer() then
 		return actor
 	else
